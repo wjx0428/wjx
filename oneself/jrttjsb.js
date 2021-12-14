@@ -289,6 +289,7 @@ async function ReadDouble() {
     }
 }
 
+
 async function GetNewTabs() {
     let caller = printCaller()
     let url = `${hostname}/score_task/v1/user/new_tabs/?aid=35&update_version_code=85221&device_platform=iphone&&device_type=iPhone13,2`
