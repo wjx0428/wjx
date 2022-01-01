@@ -12,7 +12,7 @@ ttlhd=''    多账号@隔开
 
 
 [task_local]
-20 0 * * * http://47.101.146.160/scripts/tttl.js, tag=太太乐, img-url=circles.hexagongrid.fill.system, enabled=true
+20 2,4,6 * * * http://47.101.146.160/scripts/tttl.js, tag=太太乐, img-url=circles.hexagongrid.fill.system, enabled=true
 */
 
 
