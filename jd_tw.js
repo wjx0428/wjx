@@ -101,6 +101,15 @@ async function main() {
     }else{
         console.log(`已加入战队`);
     }
+    if($.activityInfo.activityPkInfo.userTeamName === $.activityInfo.activityPkInfo.winTeamName && $.activityInfo.activityPkInfo.divideStatus === 0 && $.activityInfo.activityPkInfo.divideTimeStatus === 1){
+        console.log(`去瓜分`);
+        await takeRequest('superBrandTaskLottery',{"source":"pk","activityId":$.activityId,"encryptProjectId":$.encryptProjectId,"encryptAssignmentId":"2v8f6JzBBTjrvzwZbYztuV9MVWv7","tag":"divide"});
+        return ;
+    }
+    if($.activityInfo.activityPkInfo.divideStatus === 1){
+        console.log(`已瓜分`);
+        return ;
+    }
     if($.activityInfo.activityPkInfo.userTeamStatus !== 0 && $.activityInfo.activityPkInfo.userTeamStatus !== 1){
         return ;
     }
