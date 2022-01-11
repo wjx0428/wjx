@@ -37,13 +37,12 @@ if ($.isNode()) {
                 continue
             }
             authorCodeList = [
-                'fa9c467ab3b240c5a3c4c3a0cf9a4c1e',
-                // '3da8d0ddfaa14c608a0144eaf7417064',
+                '5151f070b43f4f21b8d7f537050bca18',
             ]
             $.bean = 0;
             $.ADID = getUUID('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 1);
             $.UUID = getUUID('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-            $.authorCode = ownCode ? ownCode : authorCodeList[random(0, authorCodeList.length)]
+            $.authorCode = ownCode['actorUuid'] ? ownCode['actorUuid'] : authorCodeList[random(0, authorCodeList.length)]
             // $.authorCode = authorCodeList[random(0, authorCodeList.length)]
             // console.log($.authorCode)
             $.authorNum = `${random(1000000, 9999999)}`
@@ -199,10 +198,9 @@ function task(function_id, body, isCommon = 0) {
                                 case 'majorsuit/memberday/activityContent':
                                     if (!data.data.hasEnd) {
                                         $.log(`开启【${data.data.activityName}】活动`)
-                                        $.log("-------------------")
                                         if ($.index === 1) {
                                             ownCode['actorUuid'] = data.data.actorUuid
-                                            console.log(ownCode)
+                                            console.log(ownCode['actorUuid'])
                                         }
                                         $.activityContent = data.data;
                                         $.actorUuid = data.data.actorUuid;
