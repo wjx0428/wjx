@@ -3,6 +3,7 @@
 奇瑞小程序
 积分换购商品
 
+const $ = new Env('奇瑞小程序');
 
 青龙变量  多账户用@
 export qrck='Bearer eyJhbG...... @  Bearer eyJhbG......'
