@@ -1,6 +1,8 @@
 /*
 APP：全球购骑士特权
 
+const $ = new Env('全球购骑士特权');
+
 直接appstore搜索下载，方便的话可以微信扫下面图片二维码走邀请注册，谢谢
 https://raw.githubusercontent.com/leafxcy/JavaScript/main/blackUnique.jpg
 
