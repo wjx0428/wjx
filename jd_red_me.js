@@ -3,13 +3,13 @@
 cron 0 0,8,20,22 * * *  https://raw.githubusercontent.com/smiek2121/scripts/master/gua_nhjRed.js
 整点跑 红包几率大点
 
-https://u.jd.com/SCHGiWi
-https://u.jd.com/SCHGiWi
+https://u.jd.com/SL9g5uT
+https://u.jd.com/SL9g5uT
 跳转到app 可查看助力情况
 
 返利变量：gua_nhjRed_rebateCode，若需要返利给自己，请自己修改环境变量[gua_nhjRed_rebateCode]
-SCHGiWi换成自己的返利
-export gua_nhjRed_rebateCode="SCHGiWi"
+SL9g5uT换成自己的返利
+export gua_nhjRed_rebateCode="SL9g5uT"
 
 需要助力[火力值]的账号pin值
 如：【京东账号2】pin
@@ -20,7 +20,7 @@ export gua_nhjRed_rebatePin="pin1,pin2"
 
 */
 
-let rebateCodes = 'SCHGiWi'
+let rebateCodes = 'SL9g5uT'
 let rebatePin = ''
 
 const $ = new Env('年货节红包');
@@ -141,9 +141,9 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
   }
   if(Object.getOwnPropertyNames($.shareCodeArr).length > 0 && $.shareCodeArr["updateTime"] != pinUpdateTime) $.setdata($.shareCodeArr,'gua_JDnhjRed')
   if(message){
-    $.msg($.name, ``, `${message}\nhttps://u.jd.com/SCHGiWi\n\n跳转到app 可查看助力情况`);
+    $.msg($.name, ``, `${message}\nhttps://u.jd.com/SL9g5uT\n\n跳转到app 可查看助力情况`);
     if ($.isNode()){
-      // await notify.sendNotify(`${$.name}`, `${message}\n\nhttps://u.jd.com/SCHGiWi\n跳转到app 可查看助力情况`);
+      // await notify.sendNotify(`${$.name}`, `${message}\n\nhttps://u.jd.com/SL9g5uT\n跳转到app 可查看助力情况`);
     }
   }
 })()
