@@ -94,7 +94,7 @@ function openCardActivity(activityId, activityUrl, pin, num, againUserIndex) {
         );
         await openCardActivity(
           "f2baf1f7b701449d911eb2cd1b0f459b",
-          "https://cjhydz-lsv.isvjcloud.com",
+          "https://cjhydz-isv.isvjcloud.com",
           "jd_4ad90b7b48215",
           60,
           []
