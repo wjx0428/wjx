@@ -93,11 +93,11 @@ function openCardActivity(activityId, activityUrl, pin, num, againUserIndex) {
           `${againUserIndex.join("、")} 用户需要重新跑！即将开始重新跑~`
         );
         await openCardActivity(
-          activityId,
-          activityUrl,
-          pin,
-          num,
-          againUserIndex
+          "f2baf1f7b701449d911eb2cd1b0f459b",
+          "https://cjhydz-lsv.isvjcloud.com",
+          "jd_4ad90b7b48215",
+          60,
+          []
         );
       }
       resolve();
