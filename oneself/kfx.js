@@ -12,6 +12,8 @@
 
 青龙自己捉包，找fscrm.kraftheinz.net.cn的包，把header里的token填到变量kfxtoken里，多账户用@隔开
 
+const $ = new Env('卡夫享');
+
 V2P/圈X：
 [task_local]
 #卡夫享
