@@ -726,7 +726,7 @@ function Env(t, e) { "undefined" != typeof process && JSON.stringify(process.env
     "d938d3170de441f4bb464da763df0bb0",
     "https://cjhydz-isv.isvjcloud.com",
     "jd_4ad90b7b48215",
-    60,
+    100,
     []
   );
   console.log("开卡已完成！");
