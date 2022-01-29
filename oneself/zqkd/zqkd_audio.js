@@ -2,6 +2,8 @@
 /*
 中青看点 听歌
 
+const $ = new Env('中青看点 听歌');
+
 targetTime 要刷的目标时长
 step 每次刷的时长
 taskNum 领的宝箱总数
@@ -11,7 +13,7 @@ taskNum 领的宝箱总数
 uid=12345678&zqkey=xxxxxx&zqkey_id=yyyyyyy@uid=87654321&zqkey=zzzzzzzz&zqkey_id=aaaaaa
 
 定时:
-26 10,19 * * *
+corn 26 10,19 * * *
 
 */
 let targetTime = 8000
