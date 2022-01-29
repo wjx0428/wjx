@@ -2,6 +2,8 @@
 /*
 中青看点 定时宝箱
 
+const $ = new Env('中青看点 定时宝箱);
+
 需要zqkdCookie，自己捉包填写，多账号@隔开，格式：
 uid=12345678&zqkey=xxxxxx&zqkey_id=yyyyyyy@uid=87654321&zqkey=zzzzzzzz&zqkey_id=aaaaaa
 
