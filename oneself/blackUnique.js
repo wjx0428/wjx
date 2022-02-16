@@ -4,7 +4,7 @@ APP：全球购骑士特权
 const $ = new Env('全球购骑士特权');
 
 直接appstore搜索下载，方便的话可以微信扫下面图片二维码走邀请注册，谢谢
-https://raw.githubusercontent.com/leafxcy/JavaScript/main/blackUnique.jpg
+
 
 定时为每小时一次，务必在0分到5分之间运行，目前每天大概1毛7
 提现需要关注微信公众号，在公众号里申请提现
@@ -20,7 +20,7 @@ V2P，圈X：重写方法 -- 点击右下角【我的】-> 【每日签到赚现
 #全球购骑士特权
 0 * * * * https://raw.githubusercontent.com/leafxcy/JavaScript/main/blackUnique.js, tag=全球购骑士特权, enabled=true
 [rewrite_local]
-https://market.chuxingyouhui.com/promo-bargain-api/activity/mqq/api/indexTopInfo? url script-request-header https://raw.githubusercontent.com/leafxcy/JavaScript/main/blackUnique.js
+https://market.chuxingyouhui.com/promo-bargain-api/activity/mqq/api/indexTopInfo? url script-request-header https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/blackUnique.js
 [MITM]
 hostname = market.chuxingyouhui.com
 
