@@ -10,13 +10,12 @@ https://game.xiaojukeji.com/api/game/mission/get?
 主机名
 game.xiaojukeji.com
 js.............
-https://gitee.com/xiecoll/radish-script/raw/master/ddgy.js
+
 青龙使用方法：添加环境变量 
 多账号用 @ 隔开
 export ddgyurl = 'https://game.xiaojukeji.com/api/game/mission/get?.........@https://game.xiaojukeji.com/api/game/mission/get?.........' 
 抓包 https://game.xiaojukeji.com/api/game/mission/get?... """整条url
-拉取脚本
-ql raw https://gitee.com/xiecoll/radish-script/raw/master/ddgy.js
+
 */
 
 const $ = new Env('滴滴果园');
