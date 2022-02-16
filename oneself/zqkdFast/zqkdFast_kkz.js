@@ -1,6 +1,6 @@
 /*
 安卓：中青看点极速版 （快应用，非IOS极速版，跟普通版青豆数据独立，普通版黑了也可以用）
-邀请链接：https://user.youth.cn/h5/fastAppWeb/invite/invite_ground.html?share_uid=1037637302&channel=c8000&nickname=%E5%B0%8F%E8%84%91%E6%96%A7%E8%9B%8B%E8%9B%8B&avatar=http%3A%2F%2Fres.youth.cn%2Favatar_202201_04_04q_61d41c92e21131037637302n.jpg&v=1641312406
+邀请链接：
 
 支持快应用的安卓手机才能玩
 定时一天一次或者两次，注意跑的时候不要做其他任务，否则有可能失败
