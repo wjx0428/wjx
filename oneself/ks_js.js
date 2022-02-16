@@ -1,7 +1,7 @@
 /*
 
 
-邀请码  : 982791098
+邀请码  : 840554361
 感谢大家的填写
 
 1.03更新  修复签到BUG
@@ -16,7 +16,7 @@ const $ = new Env('快手极速版');
 
 邀请自己的小号和别人 一定要在第一天和往后的几天都要打开刷几个视频 不然奖励会发放失败损失很大！！
 
-https://nebula.kuaishou.com/rest/n/nebula/activity/earn/overview/basicInfo  对应目标   https://raw.githubusercontent.com/liuqi6968/-/main/ks_js.js
+https://nebula.kuaishou.com/rest/n/nebula/activity/earn/overview/basicInfo  对应目标   https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/ks_js.js
 
 MITM:  nebula.kuaishou.com
 
