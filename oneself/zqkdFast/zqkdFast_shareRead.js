@@ -5,6 +5,8 @@
 
 支持快应用的安卓手机才能玩
 
+const $ = new Env('中青极速版分享阅读');
+
 转发和分享阅读，请勿贪心，小心黑号
 需要zqkdFastCookie，自行捉包填写或者使用文章重写去捉，格式uid=xxxx&token=xxxxx&token_id=xxxxx，多账号用@连接
 需要设置被阅读的次数，填到zqkdFastShareNum里，不填默认不跑
