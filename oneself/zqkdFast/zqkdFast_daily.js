@@ -3,6 +3,8 @@
 邀请链接：
 脚本地址:https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/zqkdFast/zqkdFast_daily.js
 
+const $ = new Env('中青极速版日常');
+
 支持快应用的安卓手机才能玩
 本脚本负责抽奖和PK等日常任务，需要zqkdFastCookie，自己捉包或者用文章的重写获取ck
 5,35 8-20 * * *
