@@ -1,6 +1,7 @@
 /*
 安卓：中青看点极速版 （快应用，非IOS极速版，跟普通版青豆数据独立，普通版黑了也可以用）
 邀请链接：
+脚本地址:https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/zqkdFast/zqkdFast_daily.js
 
 支持快应用的安卓手机才能玩
 本脚本负责抽奖和PK等日常任务，需要zqkdFastCookie，自己捉包或者用文章的重写获取ck
