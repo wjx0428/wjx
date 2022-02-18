@@ -9,15 +9,15 @@
 // hostname = *.snssdk.com,*.amemv.com
 
 // [task_local]
-// */30 * * * * * https://raw.githubusercontent.com/passerby-b/Script/master/dyjs_new.js, tag=抖音极速版刷音符, enabled=true
+// */30 * * * * * https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/dy_.js.js, tag=抖音极速版刷音符, enabled=true
 
 //==========================Quantumultx=========================
 // [rewrite_local]
-// luckycat/aweme/v1/task/done/read? url script-request-header https://raw.githubusercontent.com/passerby-b/Script/master/dyjs_new.js
+// luckycat/aweme/v1/task/done/read? url script-request-header https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/dy_.js.js
 
 // =========================Loon=============================
 // [Script]
-// luckycat/aweme/v1/task/done/read? script-path=https://raw.githubusercontent.com/passerby-b/Script/master/dyjs_new.js, requires-body=true, timeout=10, tag=抖音极速版刷音符
+// luckycat/aweme/v1/task/done/read? script-path=https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/dy_.js.js, requires-body=true, timeout=10, tag=抖音极速版刷音符
 
 //新版APP加密无法抓包,需要降级到14.9.0及以下版本,如果登录提示版本过低则先安装最新版的登录后在覆盖安装旧版
 //多账号版,支持用手机抓包headers,新版不支持手机跑脚本刷音符,需要手机刷用老版本,只支持单账号
