@@ -4,7 +4,6 @@
 //获取多个header成功后再定时循环执行脚本任务,间隔时间最好在30s以上,每天稳定在10000音符左右
 //且刷且珍惜,刷的别太嚣张,说不定过几天就封了
 //如果需要在服务器上用nodejs运行则需要用boxjs(数据查看器,关键字:dyjs_new)把缓存所有数据导出放到相同路径文件下下dyjs_new.json文件里
-//电报交流群:https://t.me/passerbyb2021
 
 // [mitm]
 // hostname = *.snssdk.com,*.amemv.com
