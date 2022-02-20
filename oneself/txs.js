@@ -9,6 +9,7 @@
 
 青龙捉包，把app捉到的任意url里面的token&uid填到txsCookie里，多账号@隔开
 export txsCookie='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&12345678@yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy&87654321'
+const $ = new Env('淘小说');
 
 重写：
 [task_local]
