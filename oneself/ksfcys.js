@@ -11,6 +11,8 @@
 V2P/圈X 重写：
 点击签到或者我的自动获取
 
+const $ = new Env("康师傅畅饮涉");
+
 [task_local]
 #康师傅畅饮社
 42 9,18 * * * https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/ksfcys.js, tag=康师傅畅饮社, enabled=true
