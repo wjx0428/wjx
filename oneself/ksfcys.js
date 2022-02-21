@@ -1,6 +1,6 @@
 /*
 微信小程序：康师傅畅饮社
-邀请链接：
+邀请链接：https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/ksfcys.jpg
 
 1200+积分换5元京东E卡
 脚本自动签到，默认不会抽奖
@@ -13,9 +13,9 @@ V2P/圈X 重写：
 
 [task_local]
 #康师傅畅饮社
-42 9,18 * * * https://raw.githubusercontent.com/leafxcy/JavaScript/main/ksfcys.js, tag=康师傅畅饮社, enabled=true
+42 9,18 * * * https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/ksfcys.js, tag=康师傅畅饮社, enabled=true
 [rewrite_local]
-https://club.biqr.cn/api/member/getMemberInfo url script-request-header https://raw.githubusercontent.com/leafxcy/JavaScript/main/ksfcys.js
+https://club.biqr.cn/api/member/getMemberInfo url script-request-header https://raw.githubusercontent.com/wjx0428/wjx/main/oneself/ksfcys.js
 [MITM]
 hostname = club.biqr.cn
 */
