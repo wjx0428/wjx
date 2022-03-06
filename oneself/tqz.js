@@ -7,6 +7,8 @@
 格式  变量名qtzhd  全部请求头
 格式如下，自己抓包转换吧。。或者套这个格式，自己替换openid，userToken ，userKey，apmat进去
 
+const $ = new Env("趣躺赚");
+
 {"Host":" wx.17u.cn","Connection":" keep-alive","Content-Length":" 94","openId":" xxxxxx","Content-Type":" application/json","sectoken":" ","accountSystem":" 1","platform":" WX_MP","userKey":" xxxxxxxx","userToken":" xxxxxxxxx","apmat":" xxxxxxxxxxxx","TCSecTk":" ","Accept-Encoding":" gzip,compress,br,deflate","User-Agent":" Mozilla/5.0 (iPad; CPU OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.17(0x1800112e) NetType/WIFI Language/zh_CN","Referer":" https//servicewechat.com/wxb9034f7dd5f72f1b/14/page-frame.html"}
 
 */
