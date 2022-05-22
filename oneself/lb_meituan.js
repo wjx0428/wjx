@@ -1,4 +1,3 @@
-
 /*
 美团天天神卷+赚米粒
 百度 美团登录自己抓Token ，美团小程序首页天天赚钱
@@ -7,7 +6,6 @@
 多账号用 @
 如需关闭膨胀，环境变量 sjpz 值：false
 本次更新：增加推送，可设置膨胀。
-推送依赖 https://gitee.com/xiecoll/radish-script/raw/master/MT/sendNotify.js
 
 cron 0 0,9,18 * * * lb_meituan.js
 */
