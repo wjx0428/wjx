@@ -22,7 +22,7 @@ export gua_nhjRed_rebatePin="pin1,pin2"
 let rebateCodes = 'Jtk8Mwy'
 let rebatePin = ''
 
-const $ = new Env('年货节红包');
+const $ = new Env('618锁佣');
 const jdCookieNode = $.isNode() ? require('../jdCookie.js') : '';
 const notify = $.isNode() ? require('../sendNotify') : '';
 CryptoScripts()
