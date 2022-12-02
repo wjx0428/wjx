@@ -1,28 +1,19 @@
-/*
-微信小程序-口味王
+/**
+ 作者：shawn&柠檬玩机交流
+ 微信公众号：柠檬玩机交流
+ 日期：2022-11-21
+ 软件：口味王小程序
  功能：所有功能
  依赖：依赖需要：@babel/parser  xpath  xmldom  jsdom node-jsencrypt	axios@v0.27.2
- 依赖安装方式: 高级青龙面包可以直接添加，
-             低级的在Linux里安装 例如：docker exec -it QL bash -c "npm install xmldom"
  抓包：开着抓包软件打开小程序，抓包链接里面的memberId https://member.kwwblcj.com/member/api/info/?userKeys=v1.0&pageName=member-info-index-search&formName=searchForm&kwwMember.memberId=xxxx
- 变量格式：export KWW_COOKIE='xxxx&xxxx2'  多个账号用 @ 或 & 或者 换行 分割
+ 变量格式：export kwwUid='xxxx@xxxx2'  多个账号用 @ 或者 换行 分割
  定时：一天一次
-群文件有抓取口味王ck工具
-不会用加群：212796668、681030097、743744614
-脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
-=================================Quantumultx=========================
-[task_local]
-#微信小程序-口味王
-0 40 0 * * * https://github.com/JDWXX/jd_job.git, tag=微信小程序-口味王, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-=================================Loon===================================
-[Script]
-cron "0 40 0 * * *" script-path=https://github.com/JDWXX/jd_job.git,tag=微信小程序-口味王
-===================================Surge================================
-微信小程序-口味王 = type=cron,cronexp="0 40 0 * * *",wake-system=1,timeout=3600,script-path=https://github.com/JDWXX/jd_job.git
-====================================小火箭=============================
-微信小程序-口味王 = type=cron,script-path=https://github.com/JDWXX/jd_job.git, cronexpr="0 40 0 * * *", timeout=3600, enable=true
+ cron: 12 8 * * *
+订阅仓库：
+http://nm6.xyz:20080/ningmeng/ningmeng.git
  */
-const $ = new Env('微信小程序-口味王');
+
+const $ = new Env('口臭王');
 global.window = {};
 global.navigator = {appName: 'nodejs'};
 const JSEncrypt = require('node-jsencrypt');
@@ -44,21 +35,8 @@ const Notify = 1; //0为关闭通知，1为打开通知,默认为1
 const debug = 0; //0为关闭调试，1为打开调试,默认为0
 //////////////////////
 let scriptVersion = "高级版";
-//此处填写口味王账号cookie。
-let kwwUid = ""
-let kwwUidArr = []
-// 判断环境变量里面是否有口味王ck
-if (process.env.KWW_COOKIE) {
-    if (process.env.KWW_COOKIE.indexOf('&') > -1) {
-        kwwUidArr = process.env.KWW_COOKIE.split('&');
-    } else if (process.env.KWW_COOKIE.indexOf('@') > -1) {
-        kwwUidArr = process.env.KWW_COOKIE.split('@');
-    } else if (process.env.KWW_COOKIE.indexOf('\n') > -1) {
-        kwwUidArr = process.env.KWW_COOKIE.split('\n');
-    } else {
-        kwwUidArr = [process.env.KWW_COOKIE];
-    }
-}
+let kwwUid = ($.isNode() ? process.env.kwwUid : $.getdata("kwwUid")) || ""
+let kwwUidArr = [];
 let data = '';
 let msg = '';
 let isSign = false;
@@ -115,77 +93,86 @@ let taskBeforeScore = 0;
 let remainingLimitTimes = 0
 let remainJoinTimes = 0
 let tjRecordId = ''
+log('\n 微信公众号：柠檬玩机交流')
 !(async () => {
     if (typeof $request !== "undefined") {
         await GetRewrite();
     } else {
-        log(`\n\n=============================================    \n脚本执行 - 北京时间(UTC+8)：${new Date(
-            new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 +
-            8 * 60 * 60 * 1000).toLocaleString()} \n=============================================\n`);
+        if (!(await Envs()))
+            return;
+        else {
+
+            log(`\n\n=============================================    \n脚本执行 - 北京时间(UTC+8)：${new Date(
+                new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 +
+                8 * 60 * 60 * 1000).toLocaleString()} \n=============================================\n`);
 
 
-        log(`\n============ 当前版本：${scriptVersion} ============`)
-        log(`\n=================== 共找到 ${kwwUidArr.length} 个账号 ===================`)
-        if (debug) {
-            log(`【debug】 这是你的全部账号数组:\n ${kwwUidArr}`);
-        }
-        for (let index = 0; index < kwwUidArr.length; index++) {
-
-            let num = index + 1
-            addNotifyStr(`\n==== 开始【第 ${num} 个账号】====\n`, true)
-
-            kwwUid = kwwUidArr[index];
-
-
-            log(`\n==== 基本信息 ====\n`)
-            taskBeforeScore = 0;
-            await getBaseInfo();
-            log(`\n==== 每日签到 ====\n`)
-            await getSignInfo(2 * 1000);
-            await $.wait(2000);
-            await dbInterface(2 * 1000);
-
-            await $.wait(2000);
-            if (isSign) {
-                log(`账号【${num}】已经签到了`)
-            } else {
-                await signIn();
-                await $.wait(2000);
+          
+            log(`\n============ 当前版本：${scriptVersion} ============`)
+            log(`\n=================== 共找到 ${kwwUidArr.length} 个账号 ===================`)
+            if (debug) {
+                log(`【debug】 这是你的全部账号数组:\n ${kwwUidArr}`);
             }
-            log(`\n==== 点击青果====\n`)
-            await activeTaskFlag(2 * 1000)
-            log(`\n==== 每日阅读 ====\n`)
-            await readInfo();
-            await $.wait(2000);
-            if (isArticleReadFlag) {
-                log(`账号【${num}】已经阅读了`)
-            } else {
-                await readSubmit();
-                await $.wait(2000);
+            for (let index = 0; index < kwwUidArr.length; index++) {
+
+                let num = index + 1
+                addNotifyStr(`\n==== 开始【第 ${num} 个账号】====\n`, true)
+
+                kwwUid = kwwUidArr[index];
+
+
+                log(`\n==== 基本信息 ====\n`)
+                taskBeforeScore = 0;
+                await getBaseInfo();
+                 log(`\n==== 每日签到 ====\n`)
+                 await getSignInfo(2 * 1000);
+                 await $.wait(2000);
+                 await dbInterface(2 * 1000);
+                 
+                 await $.wait(2000);
+                 if (isSign) {
+                     log(`账号【${num}】已经签到了`)
+                 } else {
+                     await signIn();
+                     await $.wait(2000);
+                 }
+                 log(`\n==== 点击青果====\n`)
+                 await activeTaskFlag(2 * 1000)
+                 log(`\n==== 每日阅读 ====\n`)
+                 await readInfo();
+                 await $.wait(2000);
+                 if (isArticleReadFlag) {
+                     log(`账号【${num}】已经阅读了`)
+                 } else {
+                     await readSubmit();
+                     await $.wait(2000);
+                 }
+                 log(`\n==== 竞猜足球 ====\n`);
+                 await finishJc(num)
+                 log(`\n==== 每日答题 ====\n`);
+                 await finishDt(num);
+                 await $.wait(3000)
+                 log(`\n==== 疯狂摇奖机 ====\n`)
+                 await finishYjj(num);
+                 await $.wait(3000)
+                log(`\n==== 海岛游乐场 ====\n`)
+                await finishHd(num);
+                await $.wait(3000)
+                 log(`\n==== 天降好礼 ====\n`)
+                 await finishTj(num);
+                 await $.wait(3000)
+                 log(`\n==== 青果园 ====\n`);
+                 await finishQgy(num);
+                 await $.wait(3000)
+                 log(`\n==== 抢兑红包 ====\n`);
+                 await finishQhd(num);
+                 await $.wait(3000)
+                 log(`\n==== 积分查询 ====\n`)
+                 await getMemberScore();
+                // await $.wait(2000);
+
             }
-            log(`\n==== 竞猜足球 ====\n`);
-            await finishJc(num)
-            log(`\n==== 每日答题 ====\n`);
-            await finishDt(num);
-            await $.wait(3000)
-            log(`\n==== 疯狂摇奖机 ====\n`)
-            await finishYjj(num);
-            await $.wait(3000)
-            log(`\n==== 海岛游乐场 ====\n`)
-            await finishHd(num);
-            await $.wait(3000)
-            log(`\n==== 天降好礼 ====\n`)
-            await finishTj(num);
-            await $.wait(3000)
-            log(`\n==== 青果园 ====\n`);
-            await finishQgy(num);
-            await $.wait(3000)
-            log(`\n==== 抢兑红包 ====\n`);
-            await finishQhd(num);
-            await $.wait(3000)
-            log(`\n==== 积分查询 ====\n`)
-            await getMemberScore();
-            // await $.wait(2000);
+            await SendMsg(msg);
         }
     }
 })()
@@ -726,7 +713,7 @@ async function activeTaskFlag(timeout = 2000) {
     }
     return new Promise((resolve) => {
         $.get(options, async (error, response, data) => {
-
+           
             try {
                 if (debug) {
                     log(`\n\n【debug】===============这是 点击青果  返回data==============`);
@@ -1394,8 +1381,8 @@ async function finishHd(num) {
     var baseUrl = hdUrl.replace(urlMatch[0], '');
     var opId = getQueryString(hdUrl, "opId");
     await getHdInfo(baseUrl, opId);
-    if (remainingLimitTimes == 0) {
-        log(`账号【${num}】海岛游乐场次数为0，不执行！`);
+   if (remainingLimitTimes == 0) {
+       log(`账号【${num}】海岛游乐场次数为0，不执行！`);
         return false
     } else {
         await getHdHtml();
@@ -1407,46 +1394,46 @@ async function finishHd(num) {
                 log(`开始第${i}次海岛游戏！`);
                 hdSubmitFlag = false;
                 hdDrawFlag = false;
-
+                
                 await startHdGame(baseUrl, opId);
-
-
+                
+                
                 if (hdStartId != '') {
                     await getHdOrderStatus(baseUrl, opId);
                     await $.wait(2000);
                     await startHdRound(baseUrl, opId,hdStartId,"1");
                     await $.wait(30000);
-
-                    await hdtj('1','5',hdStartId,'5',hdKey)
+                   
+                    await hdtj('1','5',hdStartId,'5',hdKey) 
                     await $.wait(2000);
                     if (hdSubmitFlag) {
                         await hdDraw(baseUrl, opId,hdStartId,"1");
                     }
-
+                   
                     if (hdDrawFlag && hdSubmitFlag) {
                         await startHdRound(baseUrl, opId,hdStartId,"2");
                         await $.wait(30000);
 
-                        await hdtj('2','10',hdStartId,'15',hdKey)
+                        await hdtj('2','10',hdStartId,'15',hdKey) 
                         if (hdSubmitFlag) {
                             await hdDraw(baseUrl, opId,hdStartId,"2");
                         }
                     }
-                    await $.wait(1000);
-                    if (hdDrawFlag && hdSubmitFlag) {
-                        await startHdRound(baseUrl, opId,hdStartId,"3");
-                        await $.wait(30000);
+                        await $.wait(1000);
+                        if (hdDrawFlag && hdSubmitFlag) {
+                            await startHdRound(baseUrl, opId,hdStartId,"3");
+                            await $.wait(30000);
 
-                        await hdtj('3','15',hdStartId,'30',hdKey)
-                        await $.wait(2000);
-                        if (hdSubmitFlag) {
-                            await hdDraw(baseUrl, opId,hdStartId,"3");
+                            await hdtj('3','15',hdStartId,'30',hdKey) 
+                            await $.wait(2000);
+                            if (hdSubmitFlag) {
+                                await hdDraw(baseUrl, opId,hdStartId,"3");
+                            }
+                            
                         }
-
-                    }
-
-                }
-
+                    
+            }
+                
             }
         } catch (e) {
             log(`账号【${num}】解码异常，自动跳过海岛游乐场任务！${e}`);
@@ -1738,24 +1725,24 @@ async function hdtj(hdRoundIndex,hdScore,hdStartId,hdTotalScore,hdKey) {
         let url ='https://89420.activity-20.m.duiba.com.cn/aaw/underseaGame/submit';
 
         let sign = md5('opId=202214587511596&roundIndex=' + hdRoundIndex + '&score=' + hdScore + '&startId=' + hdStartId + '&totalScore=' + hdTotalScore + '&key=' + hdKey)
-
+       
         var options = {
             method: 'POST',
             url: url,
             data:'opId=202214587511596&startId='+ hdStartId +'&score='+hdScore+'&totalScore='+hdTotalScore+'&roundIndex='+hdRoundIndex+'&sign='+sign,
             headers: {
                 cookie: gameCookie,
-                'Cache-Control': 'no-cache',
-                'Connection': 'Keep-Alive',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json',
-                'Accept-Language': 'en-us,en',
-                'Host': '89420.activity-20.m.duiba.com.cn',
-                'Referer': 'https://89420.activity-20.m.duiba.com.cn/aaw/superSurprise/index?id=85&dbnewopen&from=login&spm=89420.1.1.1',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 MicroMessenger/7.0.4.501 NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF',
-                'Accept-Encoding': 'gzip, deflate',
+'Cache-Control': 'no-cache',
+'Connection': 'Keep-Alive',
+'Content-Type': 'application/x-www-form-urlencoded',
+'Accept': 'application/json',
+'Accept-Language': 'en-us,en',
+'Host': '89420.activity-20.m.duiba.com.cn',
+'Referer': 'https://89420.activity-20.m.duiba.com.cn/aaw/superSurprise/index?id=85&dbnewopen&from=login&spm=89420.1.1.1',
+'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36 MicroMessenger/7.0.4.501 NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF',
+'Accept-Encoding': 'gzip, deflate',
             },
-
+           
         };
         if (debug) {
             log(`\n【debug】=============== 这是 海岛提交 请求 url ===============`);
@@ -1784,7 +1771,7 @@ async function hdtj(hdRoundIndex,hdScore,hdStartId,hdTotalScore,hdKey) {
         });
     })
 
-}
+} 
 async function hdSubmit(baseUrl, opId, hdKey,hdScore,hdTotalScore,hdRoundIndex) {
     hdSubmitFlag = false;
     return new Promise((resolve) => {
@@ -1833,19 +1820,19 @@ async function hdSubmit(baseUrl, opId, hdKey,hdScore,hdTotalScore,hdRoundIndex) 
                 Referer: hdUrl + '&from=login&spm=89420.1.1.1',
                 'Accept-Language': 'en-us,en'
             },
-
+            
         };
-        // if (debug) {
-        log(`\n【debug】=============== 这是 海岛提交 请求 url ===============`);
-        log(JSON.stringify(options));
-        // }
-
+       // if (debug) {
+            log(`\n【debug】=============== 这是 海岛提交 请求 url ===============`);
+            log(JSON.stringify(options));
+       // }
+       
         axios.request(options).then(function (response) {
             try {
                 var data = response.data;
                 //if (debug) {
-                log(`\n\n【debug】===============这是 海岛提交 返回data==============`);
-                log(JSON.stringify(data))
+                    log(`\n\n【debug】===============这是 海岛提交 返回data==============`);
+                    log(JSON.stringify(data))
                 //}
                 if (data.hasOwnProperty('success') && data.success) {
                     log(`海岛提交成功，${data.data.rewardToolType}`)
@@ -2291,10 +2278,10 @@ async function finishQgy(num) {
             await qgySign(baseUrl, qgyToken);
             await getTokenStr(baseUrl);
             await $.wait(2000);
-            qgyToken = dealToken(tokenStr, tokenKeyStr);
+            qgyToken = dealToken(tokenStr, tokenKeyStr); 
             if(currentStatusHaveMillis == currentStatusNeedMillis){
-                await collectCoconut(baseUrl, qgyToken)
-            }
+            await collectCoconut(baseUrl, qgyToken)    
+    }
         } catch (e) {
             log(`账号【${num}】青果园签到异常！${e}`);
         }
@@ -2528,12 +2515,12 @@ async function getQgyInfo(baseUrl) {
                     log(JSON.stringify(data))
                 }
                 if (data.hasOwnProperty('data') && data.data.hasOwnProperty('treeInfo')) {
-                    currentStatusHaveMillis = data.data.treeInfo.currentStatusHaveMillis;
-                    currentStatusNeedMillis = data.data.treeInfo.currentStatusNeedMillis;
+                     currentStatusHaveMillis = data.data.treeInfo.currentStatusHaveMillis;
+                     currentStatusNeedMillis = data.data.treeInfo.currentStatusNeedMillis;
                     isTravelling = data.data.isTravelling;
                     leftEnergyBall = data.data.leftEnergyBall
                     qgyProcess = ((currentStatusHaveMillis / currentStatusNeedMillis) * 100).toFixed(2) + "%"
-
+                    
                     log(`查询青果园信息成功，当前进度：${qgyProcess}，能量：${leftEnergyBall}`)
                 } else {
                     log(`查询青果园信息失败：${JSON.stringify(data)}`)
@@ -3307,7 +3294,7 @@ async function exchangeInfo(baseUrl) {
 async function getjcTokenKey() {
     return new Promise((resolve) => {
         var url = 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/getTokenKey?';
-
+        
         var options = {
             method: 'GET',
             url: url,
@@ -3319,7 +3306,7 @@ async function getjcTokenKey() {
                 Connection: 'keep-alive',
                 'User-Agent': userAgent,
                 'Accept-Language': 'zh-CN,zh-Hans;q=0.9',
-
+               
             }
         };
 
@@ -3356,7 +3343,7 @@ async function getjcTokenKey() {
 async function getjcToken(baseUrl) {
     return new Promise((resolve) => {
         var url = 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/getToken';
-
+        
         var options = {
             method: 'GET',
             url: url,
@@ -4170,25 +4157,25 @@ async function answerPage(baseUrl) {
 async function jcinfo() {
     return new Promise(async(resolve) => {
 
-        var options = {
-            method: 'GET',
-            url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/index.do',
-            params: {user_type: '0', is_from_share: '1', _t: '1668919193539'},
-            headers: {
-                Host: '89420.activity-20.m.duiba.com.cn',
-                Connection: 'keep-alive',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': userAgent,
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-User': '?1',
-                'Sec-Fetch-Dest': 'document',
-                'Accept-Language': 'en-us,en',
-                Cookie: gameCookie,
-                'Accept-Encoding': 'gzip, deflate'
-            }
-        };
+var options = {
+  method: 'GET',
+  url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/index.do',
+  params: {user_type: '0', is_from_share: '1', _t: '1668919193539'},
+  headers: {
+    Host: '89420.activity-20.m.duiba.com.cn',
+    Connection: 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': userAgent,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User': '?1',
+    'Sec-Fetch-Dest': 'document',
+    'Accept-Language': 'en-us,en',
+    Cookie: gameCookie,
+    'Accept-Encoding': 'gzip, deflate'
+  }
+};
         if (debug) {
             log(`\n【debug】=============== 这是 竞猜页面 请求 url ===============`);
             log(JSON.stringify(options));
@@ -4201,7 +4188,7 @@ async function jcinfo() {
                     log(data)
                 }
                 if (data.success) {
-                    myWinMatch = data.data.myWinMatch;
+                     myWinMatch = data.data.myWinMatch;
                     nextMatchInfoTime = data.data.nextMatchInfoTime
                     addNotifyStr(`竞猜猜对数：${myWinMatch}`, true)
                 } else {
@@ -4222,86 +4209,86 @@ async function jcinfo() {
 async function jcquery(nextMatchInfoTime) {
     return new Promise(async(resolve) => {
 
-        var options = {
-            method: 'GET',
-            url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/query.do',
-            params: {
-                queryTime: nextMatchInfoTime,
-                user_type: '0',
-                is_from_share: '1',
-                _t: '1668919193789'
-            },
-            headers: {
-                Host: '89420.activity-20.m.duiba.com.cn',
-                Connection: 'keep-alive',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': userAgent,
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-User': '?1',
-                'Sec-Fetch-Dest': 'document',
-                'Accept-Language': 'en-us,en',
-                Cookie: gameCookie,
-                'Accept-Encoding': 'gzip, deflate'
-            }
-        };
+var options = {
+  method: 'GET',
+  url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/query.do',
+   params: {
+    queryTime: nextMatchInfoTime,
+    user_type: '0',
+    is_from_share: '1',
+    _t: '1668919193789'
+  },
+  headers: {
+    Host: '89420.activity-20.m.duiba.com.cn',
+    Connection: 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': userAgent,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User': '?1',
+    'Sec-Fetch-Dest': 'document',
+    'Accept-Language': 'en-us,en',
+    Cookie: gameCookie,
+    'Accept-Encoding': 'gzip, deflate'
+  }
+};
         if (debug) {
             log(`\n【debug】=============== 这是 竞猜页面 请求 url ===============`);
             log(JSON.stringify(options));
         }
         axios.request(options).then(async function (response) {
-
+            
             try {
                 var data = response.data;
-
+                
                 if (debug) {
                     log(`\n\n【debug】===============这是 竞猜页面 返回data==============`);
                     log(data)
                 }
                 if (data.success) {
-                    queryinfo = data.data
-
-
+                     queryinfo = data.data
+                     
+                    
                 } else {
                     log(`竞猜页面失败，原因：${data.message}`)
                 }
             } catch (e) {
                 log(`竞猜异常：${data}，原因：${e}`)
             }
-
+            
         }).catch(function (error) {
             console.error(error);
         }).then(res => {
             //这里处理正确返回
-
+           
             resolve();
         });
-
+      
     })
 }
 async function jccreditsCost() {
     return new Promise(async(resolve) => {
 
-        var options = {
-            method: 'POST',
-            url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/credits/creditsCost.do',
-            params: {_t: '1668919309582'},
-            headers: {
-                Host: '89420.activity-20.m.duiba.com.cn',
-                Connection: 'keep-alive',
-                'User-Agent': userAgent,
-                'Content-Type': 'application/x-www-form-urlencoded',
-                Accept: '*/*',
-                'Sec-Fetch-Site': 'same-origin',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Dest': 'empty',
-                Referer: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/index.html?appID=89420',
-                'Accept-Language': 'en-us,en',
-                Cookie: gameCookie
-            },
-            data: 'toPlaywayId=home&toActionId=betting&credits=18&desc=credits_desc&user_type=0&is_from_share=1&_t=1668919309582'
-        };
+var options = {
+  method: 'POST',
+  url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/credits/creditsCost.do',
+  params: {_t: '1668919309582'},
+  headers: {
+    Host: '89420.activity-20.m.duiba.com.cn',
+    Connection: 'keep-alive',
+    'User-Agent': userAgent,
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Accept: '*/*',
+    'Sec-Fetch-Site': 'same-origin',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Dest': 'empty',
+    Referer: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/index.html?appID=89420',
+    'Accept-Language': 'en-us,en',
+    Cookie: gameCookie
+  },
+  data: 'toPlaywayId=home&toActionId=betting&credits=18&desc=credits_desc&user_type=0&is_from_share=1&_t=1668919309582'
+};
         if (debug) {
             log(`\n【debug】=============== 这是 竞猜页面 请求 url ===============`);
             log(JSON.stringify(options));
@@ -4316,7 +4303,7 @@ async function jccreditsCost() {
                 if (data.success) {
                     jcticketNum = data.data
                     log(`获取竞猜订单：` + jcticketNum)
-
+                    
                 } else {
                     log(`竞猜页面失败，原因：${data.message}`)
                 }
@@ -4335,30 +4322,30 @@ async function jccreditsCost() {
 async function jcqueryStatus() {
     return new Promise((resolve) => {
 
-        var options = {
-            method: 'GET',
-            url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/credits/queryStatus.do',
-            params: {
-                ticketNum: jcticketNum,
-                user_type: '0',
-                is_from_share: '1',
-                _t: '1668919310283'
-            },
-            headers: {
-                Host: '89420.activity-20.m.duiba.com.cn',
-                Connection: 'keep-alive',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': userAgent,
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-User': '?1',
-                'Sec-Fetch-Dest': 'document',
-                'Accept-Language': 'en-us,en',
-                Cookie: gameCookie,
-                'Accept-Encoding': 'gzip, deflate'
-            }
-        };
+var options = {
+  method: 'GET',
+  url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/credits/queryStatus.do',
+  params: {
+    ticketNum: jcticketNum,
+    user_type: '0',
+    is_from_share: '1',
+    _t: '1668919310283'
+  },
+  headers: {
+    Host: '89420.activity-20.m.duiba.com.cn',
+    Connection: 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': userAgent,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User': '?1',
+    'Sec-Fetch-Dest': 'document',
+    'Accept-Language': 'en-us,en',
+    Cookie: gameCookie,
+    'Accept-Encoding': 'gzip, deflate'
+  }
+};
         if (debug) {
             log(`\n【debug】=============== 这是 竞猜页面 请求 url ===============`);
             log(JSON.stringify(options));
@@ -4371,9 +4358,9 @@ async function jcqueryStatus() {
                     log(data)
                 }
                 if (data.success) {
-                    log("竞猜订单创建" + data.success)
+                log("竞猜订单创建" + data.success)
 
-
+                    
                 } else {
                     log(`竞猜页面失败，原因：${data.message}`)
                 }
@@ -4392,34 +4379,34 @@ async function jcqueryStatus() {
 async function jcbetting(ticket,optionId,matchId,token) {
     return new Promise((resolve) => {
 
-        var options = {
-            method: 'GET',
-            url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/betting.do',
-            params: {
-                ticket: ticket,
-                credits: '18',
-                optionId: optionId,
-                matchId: matchId,
-                token: token,
-                user_type: '0',
-                is_from_share: '1',
-                _t: '1668919310505'
-            },
-            headers: {
-                Host: '89420.activity-20.m.duiba.com.cn',
-                Connection: 'keep-alive',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': userAgent,
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-User': '?1',
-                'Sec-Fetch-Dest': 'document',
-                'Accept-Language': 'en-us,en',
-                Cookie: gameCookie,
-                'Accept-Encoding': 'gzip, deflate'
-            }
-        };
+var options = {
+  method: 'GET',
+  url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/betting.do',
+  params: {
+    ticket: ticket,
+    credits: '18',
+    optionId: optionId,
+    matchId: matchId,
+    token: token,
+    user_type: '0',
+    is_from_share: '1',
+    _t: '1668919310505'
+  },
+  headers: {
+    Host: '89420.activity-20.m.duiba.com.cn',
+    Connection: 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': userAgent,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User': '?1',
+    'Sec-Fetch-Dest': 'document',
+    'Accept-Language': 'en-us,en',
+    Cookie: gameCookie,
+    'Accept-Encoding': 'gzip, deflate'
+  }
+};
         if (debug) {
             log(`\n【debug】=============== 这是 竞猜页面 请求 url ===============`);
             log(JSON.stringify(options));
@@ -4434,8 +4421,8 @@ async function jcbetting(ticket,optionId,matchId,token) {
                 if (data.success) {
                     jcjg = data.success
                     log("竞猜结果：" + data.success)
-
-
+   
+                    
                 } else {
                     log(`竞猜结果，原因：${data.message}`)
                     jcjg = data.success
@@ -4455,25 +4442,25 @@ async function jcbetting(ticket,optionId,matchId,token) {
 async function jcrecord() {
     return new Promise((resolve) => {
 
-        var options = {
-            method: 'GET',
-            url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/record.do',
-            params: {user_type: '0', is_from_share: '1', _t: '1668919193539'},
-            headers: {
-                Host: '89420.activity-20.m.duiba.com.cn',
-                Connection: 'keep-alive',
-                'Upgrade-Insecure-Requests': '1',
-                'User-Agent': userAgent,
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Sec-Fetch-Site': 'none',
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-User': '?1',
-                'Sec-Fetch-Dest': 'document',
-                'Accept-Language': 'en-us,en',
-                Cookie: gameCookie,
-                'Accept-Encoding': 'gzip, deflate'
-            }
-        };
+var options = {
+  method: 'GET',
+  url: 'https://89420.activity-20.m.duiba.com.cn/projectx/p15fbb34c/home/record.do',
+  params: {user_type: '0', is_from_share: '1', _t: '1668919193539'},
+  headers: {
+    Host: '89420.activity-20.m.duiba.com.cn',
+    Connection: 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': userAgent,
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User': '?1',
+    'Sec-Fetch-Dest': 'document',
+    'Accept-Language': 'en-us,en',
+    Cookie: gameCookie,
+    'Accept-Encoding': 'gzip, deflate'
+  }
+};
         if (debug) {
             log(`\n【debug】=============== 这是 竞猜页面 请求 url ===============`);
             log(JSON.stringify(options));
@@ -4488,26 +4475,26 @@ async function jcrecord() {
                 if (data.success) {
                     recordinfo = data.data.bettingInfoArray;
                     for(let i = 0; i < recordinfo.length; i++){
-                        homeName = recordinfo[i].homeName
-                        awayName = recordinfo[i].awayName
-                        joinNum = recordinfo[i].joinNum
-                        matchId = recordinfo[i].matchId
-                        option1 = recordinfo[i].option1
-                        option2 = recordinfo[i].option2
-                        option3 = recordinfo[i].option3
-                        log('竞猜第' + i + "场")
-                        if (recordinfo.select == 1 ){
-                            log("叼毛选择：" + homeName + "赢")
-                        }
-                        if (recordinfo.select == 0 ){
-                            log("叼毛选择：平局")
-                        }
-                        if (recordinfo.select == 3 ){
-                            log("叼毛选择：" + awayName + "赢")
-                        }
-                    }
-                    log('投注次数：' + data.data.bettingNum)
-                    log('累计积分收益：' + data.data.credits)
+                      homeName = recordinfo[i].homeName  
+                      awayName = recordinfo[i].awayName
+                      joinNum = recordinfo[i].joinNum
+                      matchId = recordinfo[i].matchId
+                      option1 = recordinfo[i].option1
+                      option2 = recordinfo[i].option2
+                      option3 = recordinfo[i].option3
+                      log('竞猜第' + i + "场")
+                      if (recordinfo.select == 1 ){
+                      log("叼毛选择：" + homeName + "赢")     
+                      }
+                      if (recordinfo.select == 0 ){
+                      log("叼毛选择：平局")
+                      }
+                      if (recordinfo.select == 3 ){
+                      log("叼毛选择：" + awayName + "赢")     
+                      }                      
+                      }
+                      log('投注次数：' + data.data.bettingNum)
+                      log('累计积分收益：' + data.data.credits)
                 } else {
                     log(`竞猜页面失败，原因：${data.message}`)
                 }
@@ -4538,32 +4525,32 @@ async function finishJc(num) {
     }
 
     try {
-        await jcinfo();
-        await jcquery(nextMatchInfoTime);
-        for(let i = 0; i < queryinfo.length; i++){
-            homeName = queryinfo[i].homeName
-            awayName = queryinfo[i].awayName
-            joinNum = queryinfo[i].joinNum
-            matchId = queryinfo[i].matchId
-            option1 = queryinfo[i].option1
-            option2 = queryinfo[i].option2
-            option3 = queryinfo[i].option3
-            select = queryinfo[i].select
-            matchTime =queryinfo[i].matchTime
-            if(option1 >  option3){optionId = 1}
-            else optionId = 3
-            log('竞猜第' + i + "场")
-            log(homeName + " VS " + awayName)
-            log("参与人数：" + joinNum)
-            log(homeName + "支持率：" + option1)
-            log("平局" + "支持率：" + option2)
-            log(awayName + "支持率：" + option3)
-            if(select !== null && 3){
-                log('已经参加竞猜了 跳过')
-            }else
-            if(select == null){
-                if(matchTime > nextMatchInfoTime){
-                    log('没有参加过竞猜 去竞猜')
+                     await jcinfo();
+                     await jcquery(nextMatchInfoTime);
+                    for(let i = 0; i < queryinfo.length; i++){
+                      homeName = queryinfo[i].homeName  
+                      awayName = queryinfo[i].awayName
+                      joinNum = queryinfo[i].joinNum
+                      matchId = queryinfo[i].matchId
+                      option1 = queryinfo[i].option1
+                      option2 = queryinfo[i].option2
+                      option3 = queryinfo[i].option3
+                      select = queryinfo[i].select
+                      matchTime =queryinfo[i].matchTime
+                      if(option1 >  option3){optionId = 1}
+                      else optionId = 3
+                      log('竞猜第' + i + "场")
+                      log(homeName + " VS " + awayName)
+                      log("参与人数：" + joinNum)
+                      log(homeName + "支持率：" + option1)
+                      log("平局" + "支持率：" + option2)
+                      log(awayName + "支持率：" + option3)
+                      if(select !== null && 3){
+                      log('已经参加竞猜了 跳过')
+                      }else 
+                      if(select == null){
+                    if(matchTime > nextMatchInfoTime){     
+                      log('没有参加过竞猜 去竞猜')
                     await jccreditsCost()
                     await $.wait(3000);
                     await jcqueryStatus()
@@ -4574,27 +4561,27 @@ async function finishJc(num) {
                     var qhbToken = dealToken(tokenStr, tokenKeyStr);
                     await jcbetting(jcticketNum,optionId,matchId,qhbToken)
                     if (jcjg == false){
-                        if(matchTime > nextMatchInfoTime){
-                            await jccreditsCost()
-                            await $.wait(3000);
-                            await jcqueryStatus()
-                            await getjcTokenKey();
-                            await $.wait(1000);
-                            await getjcToken();
-                            await $.wait(1000);
-                            var qhbToken = dealToken(tokenStr, tokenKeyStr);
-                            await jcbetting(jcticketNum,optionId,matchId,qhbToken)}
+                    if(matchTime > nextMatchInfoTime){
+                    await jccreditsCost()
+                    await $.wait(3000);
+                    await jcqueryStatus()
+                    await getjcTokenKey();
+                    await $.wait(1000);
+                    await getjcToken();
+                    await $.wait(1000);
+                    var qhbToken = dealToken(tokenStr, tokenKeyStr);
+                    await jcbetting(jcticketNum,optionId,matchId,qhbToken)}
                     }
-                }
-            }
-        }
-
-
-
-        await jcrecord()
-
+                    }
+                      }    
+                      }
+                    
+                    
+                    
+                  await jcrecord()
+        
         await $.wait(2000);
-
+       
 
 
     } catch (e) {
@@ -4644,6 +4631,28 @@ function getYestoday() {
     var Yesterday = [y, m, d];
     Yesterday = Yesterday.join("");
     return Yesterday;
+}
+
+// ============================================变量检查============================================ \\
+async function Envs() {
+    if (kwwUid) {
+        if (kwwUid.indexOf("@") != -1) {
+            kwwUid.split("@").forEach((item) => {
+                kwwUidArr.push(item);
+            });
+        } else if (kwwUid.indexOf("\n") != -1) {
+            kwwUid.split("\n").forEach((item) => {
+                kwwUidArr.push(item);
+            });
+        } else {
+            kwwUidArr.push(kwwUid);
+        }
+    } else {
+        log(`\n 【${$.name}】：未填写变量 kwwUid`)
+        return;
+    }
+
+    return true;
 }
 
 function getQueryString(url, name) {
