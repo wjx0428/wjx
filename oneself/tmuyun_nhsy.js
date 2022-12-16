@@ -76,45 +76,36 @@
    let num = Number(task.frequency) - Number(task.finish_times)
    //console.log(`去完成：${task.name},id：${type}`)
    switch (type) {
-     case '337': //签到
+     case '1358': //签到
        await signin()
-       break;
-     case '338': //新闻资讯阅读
-       for (j = 0; j < num && j < $.acticleList.length; j++) {
-         console.log(`去浏览：${$.acticleList[j].list_title}`)
-         await read($.acticleList[j].id)
-         await $.wait(1500)
        }
        break;
-     case '339': //分享资讯给好友
+     case '1348': //分享资讯给好友
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          console.log(`去分享：${$.acticleList[j].list_title}`)
          await share($.acticleList[j].id)
          await $.wait(1500)
        }
        break;
-     case '340': //新闻资讯评论
+     case '1351': //新闻资讯评论
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          console.log(`去评论：${$.acticleList[j].list_title}`)
          await comment($.acticleList[j].id)
          await $.wait(1500)
        }
        break;
-     case '341': //新闻资讯点赞
+     case '1350': //新闻资讯点赞
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          console.log(`去点赞：${$.acticleList[j].list_title}`)
          await like($.acticleList[j].id)
          await $.wait(1500)
        }
        break;
-     case '342': //使用本地服务
-       for (j = 0; j < num && j < $.acticleList.length; j++) {
-         await local()
-         await $.wait(1500)
-       }
+     case '1359': //邀请
+       console.log(`邀请功能暂未上线`)
        break;
-       default:
-      console.log(`${task.name}暂未上线,请反馈作者`);
+     default:
+       console.log(`${task.name}暂未上线,请反馈作者`);
    }
  }
  /**
