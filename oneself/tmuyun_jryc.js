@@ -8,7 +8,7 @@
        jrychelpAu = true/false 用于是否助力作者(默认为true)
  tg频道：https://t.me/newtab0
  定时一天三次
- cron 10 8,10,19 * * *
+ cron: 10 8,10,19 * * *
  */
  const $ = new Env('今日越城')
  const notify = $.isNode() ? require('./sendNotify') : '';
