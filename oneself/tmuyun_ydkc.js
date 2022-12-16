@@ -3,8 +3,8 @@
  APP：运动柯城
  功能：完成任务，获得积分
  抓包：https://vapp.tmuyun.com/ 任意-请求头中 x-session-id 或使用 手机号#密码 两者互不影响
- 变量：jrycCookie='xxxx@12345678910#abcdefg '  多个账号用 @ 或者 换行 分割
-       jrychelpAu = true/false 用于是否助力作者(默认为true)
+ 变量：ydkcCookie='xxxx@12345678910#abcdefg '  多个账号用 @ 或者 换行 分割
+       ydkchelpAu = true/false 用于是否助力作者(默认为true)
  定时一天三次
  cron: 10 8,10,19 * * *
  */
@@ -16,7 +16,7 @@
  let cookiesArr = [],
    message = "",
    channelId = ["5d60bdf21b011b2a0fbb9c4a", "5d60be1db1985030db8625f2", "63490a34fe3fc1680f581e1f", "5d60bf161b011b2a0fbb9c4c"]
- cookie = ($.isNode() ? process.env.jrycCookie : $.getdata("jrycCookie")) || ``
+ cookie = ($.isNode() ? process.env.ydkcCookie : $.getdata("ydkcCookie")) || ``
  helpAu = ($.isNode() ? process.env.jrychelpAu : $.getdata("jrychelpAu")) || true
  !(async () => {
      await requireConfig();
@@ -658,7 +658,7 @@
      console.log(`\n=============================================    \n脚本执行 - 北京时间(UTC+8)：${new Date(new Date().getTime() +new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000).toLocaleString()} \n=============================================\n`)
      console.log(`\n=========共有${cookiesArr.length}个${$.name}账号Cookie=========\n`);
    } else {
-     console.log(`\n【缺少jrycCookies环境变量或者Cookies为空！】`)
+     console.log(`\n【缺少ydkcCookies环境变量或者Cookies为空！】`)
      return;
    }
  }
