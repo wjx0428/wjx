@@ -78,7 +78,6 @@
    switch (type) {
      case '1358': //签到
        await signin()
-       }
        break;
      case '1348': //分享资讯给好友
        for (j = 0; j < num && j < $.acticleList.length; j++) {
