@@ -540,7 +540,9 @@
        "Cache-Control": `no-cache`,
        "X-TENANT-ID": 57,
        'Host': 'vapp.tmuyun.com',
+       'Connection': 'Keep-Alive',
        "Content-Type": `application/x-www-form-urlencoded`,
+       'User-Agent': `1.2.2;${requestid};iPad13,4;IOS;16.2;Appstore`
      },
    }
  }
@@ -558,6 +560,7 @@
        "Cache-Control": `no-cache`,
        "X-TENANT-ID": 57,
        'Host': 'vapp.tmuyun.com',
+       'Connection': 'Keep-Alive',
        "Content-Type": `application/x-www-form-urlencoded`,
        'User-Agent': `1.2.2;${requestid};iPad13,4;IOS;16.2;Appstore`
      },
