@@ -11,11 +11,11 @@
  const notify = $.isNode() ? require('./sendNotify') : '';
  const CryptoJS = require("crypto-js");
  const salt = "FR*r!isE5W";
- const appid = 24;
+ const appid = 14;
  let cookiesArr = [],
    message = "",
-   channelId = ["5d3fe981b198500f695bdebf ", "6264b0b6fe3fc11a653387d2", "5d3fe99a1b011b0b08d5244b", "637c91d5b40eef5a490bcea9", "5d3fea3ab198500f695bdec4"]
- cookie = ($.isNode() ? process.env.djjsCookie : $.getdata("djjsCookie")) || ``
+   channelId = ["5cc02969b1985017d6fef804 ", "5cc2ccbe1b011b18ee37591d", "5d52be161b011b137b853d18", "5cc2cc981b011b18ee37591c", "5d075f1e1b011b68176a8a00","5cc2cc56b1985017d6fef814","5cc2cca7b1985017d6fef816","5cc2cc821b011b18ee37591b"]
+ cookie = ($.isNode() ? process.env.shpjCookie : $.getdata("shpjCookie")) || ``
  helpAu = ($.isNode() ? process.env.jrychelpAu : $.getdata("jrychelpAu")) || true
  !(async () => {
      await requireConfig();
@@ -75,38 +75,38 @@
    let num = Number(task.frequency) - Number(task.finish_times)
    //console.log(`去完成：${task.name},id：${type}`)
    switch (type) {
-     case '221': //签到
+     case '133': //签到
        await signin()
        break;
-     case '222': //新闻资讯阅读
+     case '134': //新闻资讯阅读
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          console.log(`去浏览：${$.acticleList[j].list_title}`)
          await read($.acticleList[j].id)
          await $.wait(1500)
        }
        break;
-     case '223': //分享资讯给好友
+     case '135': //分享资讯给好友
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          console.log(`去分享：${$.acticleList[j].list_title}`)
          await share($.acticleList[j].id)
          await $.wait(1500)
        }
        break;
-     case '224': //新闻资讯评论
+     case '136': //新闻资讯评论
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          console.log(`去评论：${$.acticleList[j].list_title}`)
          await comment($.acticleList[j].id)
          await $.wait(1500)
        }
        break;
-     case '225': //新闻资讯点赞
+     case '137': //新闻资讯点赞
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          console.log(`去点赞：${$.acticleList[j].list_title}`)
          await like($.acticleList[j].id)
          await $.wait(1500)
        }
        break;
-     case '226': //使用本地服务
+     case '138': //使用本地服务
        for (j = 0; j < num && j < $.acticleList.length; j++) {
          await local()
          await $.wait(1500)
@@ -126,7 +126,7 @@
   async function credential_auth() {
    let url = {
      url: `https://passport.tmuyun.com/web/oauth/credential_auth`,
-     body: `client_id=35&password=${encodeURIComponent($.pwd)}&phone_number=${$.mobile}`,
+     body: `client_id=12&password=${encodeURIComponent($.pwd)}&phone_number=${$.mobile}`,
      headers: {
        'Host': 'passport.tmuyun.com',
        'Content-Type': 'application/x-www-form-urlencoded',
@@ -550,7 +550,7 @@
        "X-TIMESTAMP": timestamp,
        "X-SIGNATURE": sign,
        "Cache-Control": `no-cache`,
-       "X-TENANT-ID": 24,
+       "X-TENANT-ID": 14,
        'Host': 'vapp.tmuyun.com',
        'Connection': 'Keep-Alive',
        "Content-Type": `application/x-www-form-urlencoded`,
@@ -570,7 +570,7 @@
        "X-TIMESTAMP": timestamp,
        "X-SIGNATURE": sign,
        "Cache-Control": `no-cache`,
-       "X-TENANT-ID": 24,
+       "X-TENANT-ID": 14,
        'Host': 'vapp.tmuyun.com',
       'Connection': 'Keep-Alive',
        "Content-Type": `application/x-www-form-urlencoded`,
