@@ -14,7 +14,7 @@
  const appid = 18;
  let cookiesArr = [],
    message = "",
-   channelId = ["5cdcc989b198504a785efad1 ", "5cde70491b011b32d34f3f6a", "5cde7039b198504a785efbde", "5cde70181b011b32d34f3f69", "62ce6c40373c557efc463687","6046d97aad61a43e70547c1a"]
+   channelId = ["5cdcc989b198504a785efad1", "5cde70491b011b32d34f3f6a", "5cde7039b198504a785efbde", "5cde70181b011b32d34f3f69", "62ce6c40373c557efc463687","6046d97aad61a43e70547c1a"]
  cookie = ($.isNode() ? process.env.lcCookie : $.getdata("lcCookie")) || ``
  helpAu = ($.isNode() ? process.env.jrychelpAu : $.getdata("jrychelpAu")) || true
  !(async () => {
