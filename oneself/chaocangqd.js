@@ -60,8 +60,8 @@ let msg = '';
 			url: `https://api.chaocang.net/api/super_star_task/dosign`,    // 这是请求的 url 可以直接用我们抓包、精简后的URL
 			headers: {            // headers 是请求体  可以直接用精简后的 hd  也就是服务器校验的部分，他需要啥，我们就给他啥  
 
-				"userId": data[1],
-				"token": "869a9186-8b3c-4742-84d4-c3bfcef85c24"
+				"token": chaocang_ck
+
 			},
 		    body: '',       // 这是一个 get 请求，没有请求体 body   如果是 post 不要忘记他鸭！
 
