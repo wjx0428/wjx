@@ -81,9 +81,9 @@ let msg = '';
 					console.log(`\n${result.msg}\n `)
 					
 
-				} else if (result.code === 40001) {   // 这里是根据服务器返回的数据做判断  方便我们知道任务是否完成了
+				} else if (result.code === 401) {   // 这里是根据服务器返回的数据做判断  方便我们知道任务是否完成了
 
-					console.log(`\n【签到】 失败 ,可能是:${result.msg}!\n `)
+					console.log(`\n【签到】失败 ,${result.msg}! cookie已过期\n `)
 					
 
 				} else {    // 这里是根据服务器返回的数据做判断  方便我们知道任务是否完成了
