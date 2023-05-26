@@ -1,37 +1,27 @@
 /*
- * sendNotify 推送通知功能
- * @param text 通知头
- * @param desp 通知体
- * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' }
- * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
- 部分变量设置
-## 拆分通知
-export BEANCHANGE_PERSENT="10"
-## 如果通知标题在此变量里面存在(&隔开),则用屏蔽不发送通知
-export NOTIFY_SKIP_LIST="京东CK检测&京东资产变动"
-## 当接收到发送CK失效通知和Ninja 运行通知时候执行子线程任务
-export NOTIFY_CKTASK="jd_CheckCK.js"
-## 如果此变量(&隔开)的关键字在通知内容里面存在,则屏蔽不发送通知.
-export NOTIFY_SKIP_TEXT="忘了种植&异常"
-## 屏蔽任务脚本的ck失效通知
-export NOTIFY_NOCKFALSE="true"
-## 服务器空数据等错误不触发通知
-export CKNOWARNERROR="true"
-## 屏蔽青龙登陆成功通知，登陆失败不屏蔽
-export NOTIFY_NOLOGINSUCCESS="true"
-## 通知底部显示
-export NOTIFY_AUTHOR="来源于：https://github.com/KingRan/KR"
-## 增加NOTIFY_AUTHOR_BLANK 环境变量，控制不显示底部信息
-export NOTIFY_AUTHOR_BLANK="true"
-## 增加NOTIFY_AUTOCHECKCK为true才开启通知脚本内置的自动禁用过期ck
-export NOTIFY_AUTOCHECKCK=“true”
+ * @Author: ccwav https://github.com/ccwav/QLScript2 
+ 
+ * sendNotify 推送通知功能 (text, desp, params , author , strsummary)
+ * @param text 通知标题  (必要)
+ * @param desp 通知内容  (必要)
+ * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' } ，没啥用,只是为了兼容旧脚本保留  (非必要)
+ * @param author 通知底部作者`  (非必要)
+ * @param strsummary 指定某些微信模板通知的预览信息，空则默认为desp  (非必要)
+ 
+ * sendNotifybyWxPucher 一对一推送通知功能 (text, desp, PtPin, author, strsummary )
+ * @param text 通知标题  (必要)
+ * @param desp 通知内容  (必要)
+ * @param PtPin CK的PTPIN (必要)
+ * @param author 通知底部作者`  (非必要)
+ * @param strsummary 指定某些微信模板通知的预览信息，空则默认为desp  (非必要)
+ 
  */
 //详细说明参考 https://github.com/ccwav/QLScript2.
 const querystring = require('querystring');
 const exec = require('child_process').exec;
 const $ = new Env();
 const timeout = 15000; //超时时间(单位毫秒)
-console.log("加载sendNotify，当前版本: 20220723");
+console.log("加载sendNotify，当前版本: 20221118");
 // =======================================go-cqhttp通知设置区域===========================================
 //gobot_url 填写请求地址http://127.0.0.1/send_private_msg
 //gobot_token 填写在go-cqhttp文件设置的访问密钥
@@ -128,15 +118,6 @@ let WP_UIDS_ONE = "";
 let GOTIFY_URL = '';
 let GOTIFY_TOKEN = '';
 let GOTIFY_PRIORITY = 0;
-
-/**
- * sendNotify 推送通知功能
- * @param text 通知头
- * @param desp 通知体
- * @param params 某些推送通知方式点击弹窗可跳转, 例：{ url: 'https://abc.com' }
- * @param author 作者仓库等信息  例：`本通知 By：https://github.com/whyour/qinglong`
- * @returns {Promise<unknown>}
- */
 let PushErrorTime = 0;
 let strTitle = "";
 let ShowRemarkType = "1";
@@ -200,9 +181,10 @@ if (process.env.NOTIFY_SHOWNAMETYPE) {
     if (ShowRemarkType == "4")
         console.log("检测到显示备注名称，格式为: 备注");
 }
-async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By https://github.com/KingRan/KR',strsummary="") {
-    console.log(`开始发送通知...`);
-
+async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ccwav Mod', strsummary = "") {
+    console.log(`开始发送通知...`); 
+	
+	//NOTIFY_FILTERBYFILE代码来自Ca11back.
     if (process.env.NOTIFY_FILTERBYFILE) {
         var no_notify = process.env.NOTIFY_FILTERBYFILE.split('&');
         if (module.parent.filename) {
@@ -721,7 +703,7 @@ async function sendNotify(text, desp, params = {}, author = '\n\n本通知 By ht
                 }
 
                 if (allCode) {
-                    desp += '\n' + '\n' + "格式化后的互助码:" + '\n' + allCode;
+                    desp += '\n' + '\n' + "ccwav格式化后的互助码:" + '\n' + allCode;
                 }
             }
         }
@@ -920,7 +902,7 @@ function getuuid(strRemark, PtPin) {
         if (Tempindex != -1) {
             console.log(PtPin + ": 检测到NVJDC的一对一格式,瑞思拜~!");
             var TempRemarkList = strRemark.split("@@");
-            for (let j = 1; j < TempRemarkList.length; j++) {
+            for (let j = 0; j < TempRemarkList.length; j++) {
                 if (TempRemarkList[j]) {
                     if (TempRemarkList[j].length > 4) {
                         if (TempRemarkList[j].substring(0, 4) == "UID_") {
@@ -1002,7 +984,7 @@ function getRemark(strRemark) {
     }
 }
 
-async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 By KR仓库', strsummary = "") {
+async function sendNotifybyWxPucher(text, desp, PtPin, author = '\n\n本通知 By ccwav Mod', strsummary = "") {
 
     try {
         var Uid = "";
@@ -1986,7 +1968,7 @@ function GetnickName() {
                 Accept: "*/*",
                 Connection: "keep-alive",
                 Cookie: cookie,
-                "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.42",
                 "Accept-Language": "zh-cn",
                 "Referer": "https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&",
                 "Accept-Encoding": "gzip, deflate, br"
@@ -2023,16 +2005,17 @@ function GetnickName() {
 function GetnickName2() {
     return new Promise(async(resolve) => {
         const options = {
-            url: `https://wxapp.m.jd.com/kwxhome/myJd/home.json?&useGuideModule=0&bizId=&brandId=&fromType=wxapp&timestamp=${Date.now()}`,
-            headers: {
-                Cookie: cookie,
-                'content-type': `application/x-www-form-urlencoded`,
-                Connection: `keep-alive`,
-                'Accept-Encoding': `gzip,compress,br,deflate`,
-                Referer: `https://servicewechat.com/wxa5bf5ee667d91626/161/page-frame.html`,
-                Host: `wxapp.m.jd.com`,
-                'User-Agent': `Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.10(0x18000a2a) NetType/WIFI Language/zh_CN`,
-            },
+            "url": `https://wq.jd.com/user/info/QueryJDUserInfo?sceneval=2`,
+            "headers": {
+                "Accept": "application/json,text/plain, */*",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Language": "zh-cn",
+                "Connection": "keep-alive",
+                "Cookie": cookie,
+                "Referer": "https://wqs.jd.com/my/jingdou/my.shtml?sceneval=2",
+                "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1")
+            }
         };
         $.post(options, (err, resp, data) => {
             try {
@@ -2041,13 +2024,12 @@ function GetnickName2() {
                 } else {
                     if (data) {
                         data = JSON.parse(data);
-                        if (!data.user) {
+						if (data['retcode'] === 13) {
                             $.isLogin = false; //cookie过期
-                            return;
-                        }
-                        const userInfo = data.user;
-                        if (userInfo) {
-                            $.nickName = userInfo.petName;
+                            return
+                        }                        
+						if (data['retcode'] === 0) {
+                            $.nickName = (data['base'] && data['base'].nickname) || "";
                         }
                     } else {
                         $.log('京东服务器返回空数据');
