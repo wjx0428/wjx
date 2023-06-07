@@ -3,7 +3,6 @@
  功能：完成任务，获得积分
  抓包：https://vapp.tmuyun.com/ 任意-请求头中 x-session-id 或使用 手机号#密码 两者互不影响
  变量：ylwCookie='xxxx@12345678910#abcdefg '  多个账号用 @ 或者 换行 分割
-       jrychelpAu = true/false 用于是否助力作者(默认为true)
  定时一天三次
  cron: 10 8,10,19 * * *
  */
@@ -16,7 +15,6 @@
    message = "",
    channelId = ["62c53767373c550ecabd9d6a ", "6327c414ad61a4052a4a2a12", "62c537afde224a0ebdf0fe7c", "62c537bc373c550ecabd9d6c", "63318faafe3fc1537e56b6e2","62c537a1fe3fc1538430e59a"]
  cookie = ($.isNode() ? process.env.ylwCookie : $.getdata("ylwCookie")) || ``
- helpAu = ($.isNode() ? process.env.jrychelpAu : $.getdata("jrychelpAu")) || true
  !(async () => {
      await requireConfig();
      for (let i = 0; i < cookiesArr.length; i++) {
@@ -59,10 +57,7 @@
          await doTask($.taskList[i])
        }
      }
-     if (helpAu == true) {
-       console.log(`【环境变量：jrychelpAu 默认为True 前往助力作者】`)
-       await invite()
-     }
+	 await invite()
      console.log(`【查询账号信息】`)
      await account_detail()
      console.log(`拥有:[${$.integral}]积分 | 等级:[${$.grade}]-${$.grade_name}`)
@@ -508,24 +503,14 @@
   * 助力
   */
  async function invite() {
-   let body = `ref_code=MKLCX9`
+   let body = `ref_code=JSDZ89`
    return new Promise(resolve => {
      $.post((taskPostUrl("/api/account/update_ref_code", body)), async (err, resp, data) => {
        try {
          if (err) {
-           console.log(`${err}`)
-           console.log(`${$.name} API请求失败，请检查网路重试`)
          } else {
            if (data) {
-             data = JSON.parse(data);
-             //console.log(JSON.stringify(data));
-             if (data.code === 0) {
-               console.log(`助力成功！`)
-             } else {
-               console.log(data.message)
-             }
            } else {
-             console.log("没有返回数据")
            }
          }
        } catch (e) {
