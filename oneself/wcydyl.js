@@ -1,6 +1,7 @@
  /*
  APP：望潮-阅读有礼
- 变量：wcydCookie='xxxx@12345678910#abcdefg '  多个账号用 @ 或者 换行 分割
+ 进入app-首页-阅读有礼，先点击右下角抽奖，绑定zfb号
+ 变量：wcydCookie='手机号#密码@12345678910#abcdefg '  多个账号用 @ 或者 换行 分割
  cron: 10 1 * * *
  */
  const $ = new Env('望潮-阅读有礼')
